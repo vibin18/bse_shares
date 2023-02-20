@@ -1,8 +1,10 @@
 package config
 
-import "github.com/vibin18/bse_shares/utils"
+import (
+	"github.com/vibin18/bse_shares/updater"
+)
 
 type AppConfig struct {
-	Data      []*utils.Stock
+	Data      []*updater.Stock
 	ShareList []*string
 }

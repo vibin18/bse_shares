@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	goquery2 "github.com/PuerkitoBio/goquery"
-	"github.com/vibin18/bse_shares/utils"
 	"log"
 	"net/http"
 	"strings"
@@ -20,8 +19,8 @@ func NewCacheUpdaterService(cacheUpdaterRepo ShareCacheUpdaterRepository) CacheU
 	}
 }
 
-func (s *cacheUpdaterService) Update(ul []*string) []*utils.Stock {
-	st := []*utils.Stock{}
+func (s *cacheUpdaterService) Update(ul []*string) []*Stock {
+	st := []*Stock{}
 	var shareNameList []string
 	for _, shareName := range ul {
 		shareNameList = append(shareNameList, *shareName)
@@ -100,13 +99,13 @@ func getStockQuote(URL string) (*goquery2.Document, error) {
 	return doc, nil
 }
 
-func getStock(scripcd string) utils.Stock {
+func getStock(scripcd string) Stock {
 	url := fmt.Sprintf("https://m.bseindia.com/StockReach.aspx?scripcd=%v", scripcd)
 	doc, err := getStockQuote(url)
 	if err != nil {
 		log.Println(err)
 	}
-	Share := utils.Stock{}
+	Share := Stock{}
 
 	price := doc.Find(
 		".srcovalue strong").Text()
