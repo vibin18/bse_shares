@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 	flags "github.com/jessevdk/go-flags"
 	"github.com/vibin18/bse_shares/config"
 	"github.com/vibin18/bse_shares/handler"
@@ -49,14 +47,13 @@ func main() {
 	}
 
 	myShares := updater.NewListUpdaterService(db)
-	myShareList := myShares.ListUpdate()
-	app.ShareList = &myShareList
+	app.ShareList = myShares.ListUpdate()
 	handler.CreateNewHandlerConfig(&app)
 
 	go func() {
 		for range time.Tick(time.Second * 10) {
 			myShareCache := updater.NewCacheUpdaterService(db)
-			gg := myShareCache.Update(myShareList)
+			gg := myShareCache.Update(app.ShareList)
 			mu := sync.Mutex{}
 			mu.Lock()
 			defer mu.Unlock()
@@ -73,12 +70,4 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-}
-func routes() http.Handler {
-	mux := chi.NewMux()
-	mux.Use(middleware.DefaultLogger)
-
-	mux.Get("/", handler.IndexHandler)
-
-	return mux
 }

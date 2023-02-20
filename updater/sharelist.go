@@ -14,9 +14,9 @@ func NewListUpdaterService(listUpdaterRepo ShareListUpdaterRepository) ListUpdat
 	}
 }
 
-func (s *listUpdaterService) ListUpdate() []string {
+func (s *listUpdaterService) ListUpdate() []*string {
 	log.Println("Updating share list")
-	var ul []string
+	var ul []*string
 
 	log.Println("Fetching db for new list")
 	dl, err := s.listUpdaterRepo.GetAllPurchaseReport()
@@ -25,7 +25,8 @@ func (s *listUpdaterService) ListUpdate() []string {
 		log.Println("Error getting share list report from postgres, error : ", err)
 	}
 	for _, share := range dl {
-		ul = append(ul, share.Name)
+		name := share.Name
+		ul = append(ul, &name)
 	}
 	return ul
 }

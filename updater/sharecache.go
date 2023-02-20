@@ -20,21 +20,22 @@ func NewCacheUpdaterService(cacheUpdaterRepo ShareCacheUpdaterRepository) CacheU
 	}
 }
 
-func (s *cacheUpdaterService) Update(ul []string) *[]utils.Stock {
-	st := &[]utils.Stock{}
+func (s *cacheUpdaterService) Update(ul []*string) []*utils.Stock {
+	st := []*utils.Stock{}
 	var shareNameList []string
 	for _, shareName := range ul {
-
-		shareNameList = append(shareNameList, shareName)
+		shareNameList = append(shareNameList, *shareName)
 	}
+
 	codeList, err := UpdateStrCodes(shareNameList)
+
 	if err != nil {
 		log.Println("Failed to update code list: ", err)
 	}
 
 	for _, code := range codeList {
 		stc := GetStock(code)
-		*st = append(*st, stc)
+		st = append(st, &stc)
 	}
 	return st
 
@@ -61,7 +62,7 @@ func UpdateStrCodes(shareNames []string) ([]string, error) {
 	}
 	log.Println("Updating code lists using UpdateStrCodes")
 	for _, n := range shareNames { // my list range needed
-		log.Println("Checking share :" + n)
+		log.Println("Checking share : " + n)
 		for _, share := range lines { // every line ranged each line is called share
 			shares := strings.Split(share, "EOD Prices|BOM") // share and code splited
 
