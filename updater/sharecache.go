@@ -27,20 +27,20 @@ func (s *cacheUpdaterService) Update(ul []*string) []*utils.Stock {
 		shareNameList = append(shareNameList, *shareName)
 	}
 
-	codeList, err := UpdateStrCodes(shareNameList)
+	codeList, err := updateStrCodes(shareNameList)
 
 	if err != nil {
 		log.Println("Failed to update code list: ", err)
 	}
 
 	for _, code := range codeList {
-		stc := GetStock(code)
+		stc := getStock(code)
 		st = append(st, &stc)
 	}
 	return st
 
 }
-func UpdateStrCodes(shareNames []string) ([]string, error) {
+func updateStrCodes(shareNames []string) ([]string, error) {
 	var codelist []string
 
 	client := http.Client{}
@@ -60,7 +60,7 @@ func UpdateStrCodes(shareNames []string) ([]string, error) {
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-	log.Println("Updating code lists using UpdateStrCodes")
+	log.Println("Updating code lists")
 	for _, n := range shareNames { // my list range needed
 		log.Println("Checking share : " + n)
 		for _, share := range lines { // every line ranged each line is called share
@@ -100,7 +100,7 @@ func getStockQuote(URL string) (*goquery2.Document, error) {
 	return doc, nil
 }
 
-func GetStock(scripcd string) utils.Stock {
+func getStock(scripcd string) utils.Stock {
 	url := fmt.Sprintf("https://m.bseindia.com/StockReach.aspx?scripcd=%v", scripcd)
 	doc, err := getStockQuote(url)
 	if err != nil {
