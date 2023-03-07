@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+{{template "Header"}}
+
+<body>
+
+    {{template "Sidenav"}}
+    <main class="mt-5 pt-3">
+        <div class="container-fluid p-5 my-5">
+            <div class="row  align-items-start justify-content-md-center">
+                <div class="col-md-6 ml-md-auto">
+                    <table id="dtBasicSort" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th class="th-sm">Purchase Date
+                            </th>
+                            <th class="th-sm">Name
+                            </th>
+                            <th class="th-sm">No. Shares
+                            </th>
+                            <th class="th-sm">Price
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        {{range $index,$val := .}}
+                        <tr>
+                            <td>{{.CreatedAt}}</td>
+                            <td>{{.Name}}</td>
+                            <td>{{.Count}}</td>
+                            <td>{{.Price}}</td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/js/dist/main.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.12.0/js/mdb.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dtBasicSort').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            //domingo, 03 de abril de 2016
+            //dddd, DD de MMMM de YYYY
+
+            $.fn.dataTable.moment('YYYY/MMM/DD');
+
+            $('#example').DataTable(
+                {
+                    paging: false,
+                    searching: true,
+
+                    //Datatables will show information about the table including information about filtered data if that action is being performed
+                    //https://datatables.net/reference/option/info
+                    info: false,
+                    order: [[ 0, "asc" ]],
+                    language: {
+                        url: 'https://cdn.datatables.net/plug-ins/1.10.13/i18n/Spanish.json'
+                    }
+                }
+            );
+        } );
+    </script>
+</body>
+
+</html>

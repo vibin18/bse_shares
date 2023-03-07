@@ -1,0 +1,21 @@
+{{define "Add-share"}}
+<main class="mt-5 pt-3">
+  <div class="container-fluid p-5 my-5">
+    <div class="row  align-items-start justify-content-md-center">
+      <div class="col-md-3 ml-md-auto">
+        <h4>Add new shares</h4>
+        <form class="needs-validation" method="post" action="/add-share-post">
+          <div class="form-group mt-3">
+            <input class="form-control" required id="company" autocomplete="off" type='text'  name='company' value="" placeholder="Company Name" />
+          </div>
+          <hr>
+          <div>
+            <input  type="submit" class="btn btn-success" value="Add"/>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+{{end}}

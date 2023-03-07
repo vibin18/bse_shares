@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{{template "Header"}}
+<body>
+{{template "Sidenav"}}
+
+{{ $card := "bg-success" }}
+{{ $table := "table-success" }}
+
+<main class="mt-5 p-1">
+    <div class="row">
+{{range $index,$val := .}}
+{{if  le .CurrentValue .PreviousClose }}
+    {{ $card = "bg-danger" }}
+    {{ $table = "table-danger" }}
+{{else}}
+    {{ $card = "bg-success" }}
+    {{ $table = "table-success" }}
+{{end}}
+
+
+                <div class="col-sm-2 mb-1 pt-1 mt-1">
+                    <div class="card {{$card}} m-3 mb-1 text-white" style="width: 18rem;">
+                        <div class="card-header mb-1 pt-3">{{.CompanyName}} </div>
+                        <table class="table {{$table}}">
+
+                            <thead>
+                            <tr>
+                                <th scope="col">Share Detail</th>
+                                <th scope="col">Value</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Current Value</td>
+                                <td>{{.CurrentValue}}</td>
+                            </tr>
+                            <tr>
+                                <td>Day High</td>
+                                <td>{{.DayHigh}}</td>
+                            </tr>
+                            <tr>
+                                <td>Day Low</td>
+                                <td>{{.DayLow}}</td>
+                            </tr>
+                            <tr>
+                                <td>Week Average</td>
+                                <td>{{.WeekAverage}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="card-footer d-flex">
+                            <p> <small>Last Updated: {{.UpdateTime}}</small></p>
+                            <span class="ms-auto">
+                                <i class="bi bi-chevron-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+         </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!--   <script src="./js/script.js"></script>-->
+  </body>
+</html>

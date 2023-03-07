@@ -1,7 +1,9 @@
 package updater
 
+import "github.com/vibin18/bse_shares/model"
+
 type ShareListUpdaterRepository interface {
-	GetAllPurchaseReport() (ShareReports, error)
+	GetAllPurchaseReport() (model.ShareReports, error)
 }
 
 type ShareCacheUpdaterRepository interface {

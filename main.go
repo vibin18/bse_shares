@@ -53,17 +53,17 @@ func main() {
 	go func() {
 		for range time.Tick(time.Second * 10) {
 			myShareCache := updater.NewCacheUpdaterService(db)
-			gg := myShareCache.Update(app.ShareList)
-			mu := sync.Mutex{}
-			mu.Lock()
-			defer mu.Unlock()
-			app.Data = gg
+			myStockList := myShareCache.Update(app.ShareList)
+			mutex := sync.Mutex{}
+			mutex.Lock()
+			defer mutex.Unlock()
+			app.Data = myStockList
 		}
 	}()
 
 	srv := &http.Server{
 		Addr:    ":8080",
-		Handler: routes(),
+		Handler: routes(db),
 	}
 	log.Printf("Starting HTTP server")
 	err = srv.ListenAndServe()
